@@ -1,0 +1,127 @@
+
+Action: view_file({"path":"/app/design_guidelines.json"})
+Observation: [Showing lines 1-123 of 123 total] /app/design_guidelines.json:
+1|{
+2|  "theme_concept": "Organic & Earthy (FORESTHREE)",
+3|  "description": "A high-performance, aesthetically grounded inventory management and POS system. Balances dense data requirements with an approachable, calm aesthetic suited for daily store operations. The system supports global theming (fonts, colors, slogans) via CSS variables.",
+4|  "typography": {
+5|    "strategy": "Configurable via CSS variables for the Settings page requirement. Default to 'Plus Jakarta Sans' for a modern SaaS look with organic geometry, paired with 'Inter' for high-density data tables.",
+6|    "headings": "font-sans tracking-tight text-forest-900 (Default to Plus Jakarta Sans or Outfit)",
+7|    "body": "font-sans leading-relaxed text-slate-600",
+8|    "scales": {
+9|      "h1": "text-4xl sm:text-5xl font-bold tracking-tighter",
+10|      "h2": "text-2xl sm:text-3xl font-semibold tracking-tight",
+11|      "h3": "text-xl sm:text-2xl font-medium",
+12|      "h4": "text-lg font-medium",
+13|      "body": "text-base",
+14|      "small_labels": "text-xs font-semibold tracking-[0.2em] uppercase"
+15|    }
+16|  },
+17|  "colors": {
+18|    "archetype": "Organic & Earthy",
+19|    "primary": {
+20|      "DEFAULT": "#064E3B",
+21|      "hover": "#047857",
+22|      "foreground": "#FFFFFF"
+23|    },
+24|    "background": {
+25|      "light": "#FAFAFA",
+26|      "dark": "#0F172A",
+27|      "surface": "#FFFFFF"
+28|    },
+29|    "accents": {
+30|      "success_moss": "#65A30D",
+31|      "warning_ochre": "#D97706",
+32|      "danger_terracotta": "#991B1B",
+33|      "sand": "#F5F5F4"
+34|    },
+35|    "text": {
+36|      "primary": "#0F172A",
+37|      "secondary": "#475569",
+38|      "muted": "#94A3B8"
+39|    },
+40|    "rules": [
+41|      "Use high contrast ratios (APCA standard) for text on colored backgrounds.",
+42|      "Never use pure black or pure white; always tint neutrals slightly with blue or warm gray.",
+43|      "Stock status colors must be distinct: Green (In Stock), Yellow (Low), Red (Out of Stock)."
+44|    ]
+45|  },
+46|  "visual_enhancers": {
+47|    "surfaces": [
+48|      "Glassmorphism (Crystal): Used for sticky top navigation and mobile bottom bars. Must use backdrop-blur-xl with bg-white/80 (light) or bg-slate-900/80 (dark), plus a subtle 1px inner border (border-white/20). NO pure transparency.",
+49|      "Neumorphism (Tactile): Used for high-action POS buttons (Add to Cart). Subtle shadow with sharp 1px border-black/5 to ground it.",
+50|      "Grid Borders (Technical): Used for inventory data tables. border-collapse with subtle right/bottom borders for cells."
+51|    ],
+52|    "shadows": "Ambient layered shadows for cards. Hover states should lift (-translate-y-1) and cast a slightly deeper, diffused shadow."
+53|  },
+54|  "component_usage": {
+55|    "strategy": "Shadcn UI for interactive logic (customized heavily). Raw HTML/Tailwind for bento layouts and product grids.",
+56|    "buttons": "Pill-shaped or rounded-lg with clear hover states (bg color shift + subtle lift). Primary action gets Forest Green.",
+57|    "inputs_forms": "Use Shadcn Form, Input, Select. Customize with slightly thicker borders on focus (ring-2 ring-forest-500/20).",
+58|    "tables": "Dense. Use Shadcn Table. Remove unnecessary padding inside cells to maximize data visibility. Add visual indicators (colored dots) for stock status.",
+59|    "cards": "Avoid overusing the Shadcn Card wrapper for everything. For the merchant product grid, use cardless flat images with clean text below to feel like a modern e-commerce site.",
+60|    "toasts": "Use Sonner for all notifications (stock added, order placed, settings saved)."
+61|  },
+62|  "grids_and_layouts": {
+63|    "dashboard_admin": {
+64|      "structure": "Sidebar navigation + Top sticky header. Main content uses Bento Grid Protocol.",
+65|      "summary_widgets": "grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6. Use generous padding (p-6).",
+66|      "inventory_view": "Three-panel layout conceptually: Filter sidebar (optional), main dense data table, and slide-out/dialog for quick edit."
+67|    },
+68|    "merchant_pos": {
+69|      "structure": "Mobile-first, responsive grid. grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4.",
+70|      "navigation": "Sticky top category filters, sticky bottom 'Cart' summary bar on mobile.",
+71|      "spacing": "Generous spacing philosophy. Use p-8 for major sections, p-4 inside product cells."
+72|    }
+73|  },
+74|  "motion": {
+75|    "transitions": "Use specific transition properties, e.g., transition-colors duration-200, transition-transform. NEVER use transition-all.",
+76|    "stagger": "List items (inventory rows, product grid items) should have a slight staggered fade-in entrance.",
+77|    "interaction": "Micro-interactions on hover (scale 1.02 for product images, color shift for buttons)."
+78|  },
+79|  "accessibility": {
+80|    "testing": "All interactive elements MUST have data-testid attributes (e.g., data-testid='login-submit', data-testid='add-stock-btn').",
+81|    "contrast": "Ensure text over images has a gradient overlay or text-shadow.",
+82|    "focus": "Clear focus rings (focus:ring-2) matching the brand primary color."
+83|  },
+84|  "media": {
+85|    "auth_background": {
+86|      "url": "https://images.unsplash.com/photo-1511207538754-e8555f2bc187?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHxmb3Jlc3QlMjBtaW5pbWFsaXN0JTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3ODYxODk4NDB8MA&ixlib=rb-4.1.0&q=85",
+87|      "description": "Dark minimalist forest background for login page left panel."
+88|    },
+89|    "inventory_placeholder": {
+90|      "url": "https://images.unsplash.com/photo-1648824572347-517357c9c44e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxzdG9yZSUyMGludmVudG9yeSUyMHByb2R1Y3RzfGVufDB8fHx8MTc4NjE4OTg0MXww&ixlib=rb-4.1.0&q=85",
+91|      "description": "Men checking inventory. Use for empty states or dashboard hero graphic."
+92|    },
+93|    "pos_terminal": {
+94|      "url": "https://images.unsplash.com/photo-1726065235239-b20b88d43eea?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwxfHxwb3MlMjBtb2JpbGUlMjBtZXJjaGFudCUyMHN0b3JlfGVufDB8fHx8MTc4NjE4OTg0MHww&ixlib=rb-4.1.0&q=85",
+95|      "description": "POS desktop terminal context image, good for merchant dashboard welcome screen."
+96|    }
+97|  },
+98|  "instructions_to_main_agent": [
+99|    "Read this design_guidelines.json carefully before starting.",
+100|    "The application requires JavaScript files (.js/.jsx) NOT TypeScript (.tsx). Adapt Shadcn UI and component generation accordingly.",
+101|    "Implement a CSS variable system in tailwind.config.js and index.css to allow changing the global Theme (Light/Dark/Forest), Font Family, and App Slogan from the Settings page.",
+102|    "Implement the 'FORESTHREE' branding strongly across the app.",
+103|    "For the merchant ordering page, ensure it is heavily optimized for mobile UX (sticky bottom bars, easy tap targets).",
+104|    "For the admin inventory side, optimize for dense data view (tables) and bulk actions (Export/Import Excel, Print Reports).",
+105|    "CRITICAL: Do NOT use fully transparent backgrounds on elements sitting over content (headers, dialogs). Apply glassmorphism or solid fills."
+106|  ],
+107|  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+108|    "You tend to converge toward generic, 'on distribution' outputs. Make creative, distinctive frontends that surprise and delight.",
+109|    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+110|    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+111|    "Create depth through layered design elements with z-index hierarchy.",
+112|    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+113|    "You MUST NOT apply universal transition (e.g., transition: all). Always add transitions for specific properties excluding transforms.",
+114|    "You MUST NOT center align the app container (.App { text-align: center; }).",
+115|    "Always use modern button styles (pill-shaped or sharp) with interaction animations & color relevant to the app style.",
+116|    "NEVER use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons. Use proper SVG icon libraries (lucide-react).",
+117|    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+118|    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+119|    "Subtle grain textures, custom selection states, and loading animations separate good from extraordinary.",
+120|    "Use Sonner for toasts.",
+121|    "Prioritize using pre-existing components from src/components/ui. Create new components matching the style of existing ones."
+122|  ]
+123|}
+[End of file]
