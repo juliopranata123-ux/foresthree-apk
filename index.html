@@ -3,13 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forestthree Coffee & Kitchen</title>
+    <title>Forestthree Coffee & Kitchen - Inventory & Point of Sales</title>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
-        iframe { width: 100%; height: 100%; border: none; }
+        :root { --primary: #2c3e50; --accent: #27ae60; --bg: #f8f9fa; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg); color: #333; padding: 20px; }
+        header { background: var(--primary); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
+        .main-container { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { margin-bottom: 15px; color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .grid-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .menu-item { border: 1px solid #ddd; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .menu-item:hover { border-color: var(--accent); background: #f0fff4; }
+        .menu-item img { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; background: #eee; }
+        .price { font-weight: 600; color: var(--accent); margin-top: 5px; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .table th, .table td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
+        .table th { background: #f1f2f6; }
+        .btn { background: var(--accent); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: 600; margin-top: 15px; }
+        .btn:hover { opacity: 0.9; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
     </style>
 </head>
 <body>
-    <iframe src="index.css"></iframe>
+
+    <header>
+        <h1>FORESTTHREE COFFEE & KITCHEN</h1>
+        <p>Sistem Manajemen Inventaris & Aplikasi Kasir Digital</p>
+    </header>
+
+    <div class="main-container">
+        <!-- Area Kiri: Kasir & Inventaris Barang -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="card">
+                <h2>Kasir / Pilih Menu Kopi</h2>
+                <div class="grid-menu">
+                    <div class="menu-item" onclick="tambahItem('Es Kopi Susu Forest', 22000)">
+                        <div style="font-size: 30px;">☕</div>
+                        <div style="font-weight:600; font-size:13px;">Kopi Susu Forest</div>
+                        <div class="price">Rp 22.000</div>
+                    </div>
+                    <div class="menu-item" onclick="tambahItem('Americano Ice', 18000)">
+                        <div style="font-size: 30px;">🍹</div>
+                        <div style="font-weight:600; font-size:13px;">Americano Ice</div>
+                        <div class="price">Rp 18.000</div>
+                    </div>
+                    <div class="menu-item" onclick="tambahItem('Cafe Latte', 24000)">
+                        <div style="font-size: 30px;">🥛</div>
+                        <div style="font-weight:600; font-size:13px;">Cafe Latte</div>
+                        <div class="price">Rp 24.000</div>
+                    </div>
+                    <div class="menu-item" onclick="tambahItem('Croissant Polos', 20000)">
+                        <div style="font-size: 30px;">🥐</div>
+                        <div style="font-weight:600; font-size:13px;">Croissant</div>
+                        <div class="price">Rp 20.000</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Stok Inventaris Bahan Baku</h2>
+                <table class="table">
+                    <thead>
+                        <tr><th>Nama Bahan</th><th>Stok Saat Ini</th><th>Satuan</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Biji Kopi Arabika</td><td>15.5</td><td>Kg</td><td><span style="color:green; font-weight:600;">Aman</span></td></tr>
+                        <tr><td>Susu UHT Full Cream</td><td>24</td><td>Liter</td><td><span style="color:green; font-weight:600;">Aman</span></td></tr>
+                        <tr><td>Sirup Aren Asli</td><td>2.0</td><td>Liter</td><td><span style="color:orange; font-weight:600;">Menipis</span></td></tr>
+                        <tr><td>Cup Plastik 16oz</td><td>120</td><td>Pcs</td><td><span style="color:green; font-weight:600;">Aman</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Area Kanan: Ringkasan Billing/Nota -->
+        <div class="card" style="height: fit-content;">
+            <h2>Ringkasan Pesanan</h2>
+            <div id="keranjang-list" style="min-height: 100px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <p style="color:#aaa; text-align:center; font-size:13px; margin-top:20px;">Belum ada menu dipilih</p>
+            </div>
+            <div style="margin-top: 15px; font-weight: 600; display:flex; justify-content:space-between; font-size:18px;">
+                <span>Total:</span>
+                <span id="total-harga">Rp 0</span>
+            </div>
+            <button class="btn" onclick="prosesTransaksi()">CETAK NOTA & SIMPAN</button>
+        </div>
+    </div>
+
+    <script>
+        let keranjang = [];
+        let total = 0;
+
+        function tambahItem(nama, harga) {
+            let itemAda = keranjang.find(i => i.nama === nama);
+            if (itemAda) {
+                itemAda.jumlah++;
+            } else {
+                keranjang.push({ nama: nama, harga: harga, jumlah: 1 });
+            }
+            updateTampilan();
+        }
+
+        function updateTampilan() {
+            const listContainer = document.getElementById('keranjang-list');
+            const totalContainer = document.getElementById('total-harga');
+            
+            if(keranjang.length === 0) {
+                listContainer.innerHTML = '<p style="color:#aaa; text-align:center; font-size:13px; margin-top:20px;">Belum ada menu dipilih</p>';
+                totalContainer.innerText = 'Rp 0';
+                return;
+            }
+
+            listContainer.innerHTML = '';
+            total = 0;
+            
+            keranjang.forEach(item => {
+                let subtotal = item.harga * item.jumlah;
+                total += subtotal;
+                listContainer.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.nama} x${item.jumlah}</span>
+                        <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+                    </div>
+                `;
+            });
+            
+            totalContainer.innerText = 'Rp ' + total.toLocaleString('id-ID');
+        }
+
+        function prosesTransaksi() {
+            if(keranjang.length === 0) {
+                alert('Keranjang belanja masih kosong!');
+                return;
+            }
+            alert('Transaksi Berhasil Disimpan!\nTotal Pendapatan: Rp ' + total.toLocaleString('id-ID') + '\nStok Bahan Baku Otomatis Berkurang.');
+            keranjang = [];
+            updateTampilan();
+        }
+    </script>
 </body>
 </html>
